@@ -10,9 +10,11 @@ from resources.store import Store, StoreList
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL", "sqlite:///data.db"
-)
+if os.environ.get("DATABASE_URL"):
+    db_url = re.sub("postgres", "postgresql", os.environ.get("DATABASE_URL"))
+else:
+    du_url = "sqlite:///data.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
 ] = False  # Turn of flask SQLAlchemy modification tracker
