@@ -31,7 +31,8 @@ class Item(Resource):
 
         try:
             item.save_to_db()
-        except:
+        except Exception as err:
+            print(err)
             return {
                 "message": "An error occured iserting the item"
             }, 500  # Internal server error
